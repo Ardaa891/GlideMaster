@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("falling", false);
 
             rb.useGravity = false;
-            rb.drag = 0.1f;
+            rb.drag = 0.08f;
             speed = 5000f;
 
             isGliding = true;
