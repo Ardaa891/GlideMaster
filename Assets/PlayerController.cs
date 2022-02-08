@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    
     public float speed;
     private float _currentSpeed;
-    public float limitX;
+    
     public bool isGliding = false;
-    float newX = 0;
-    float touchXdelta = 0;
+    
     public float xSpeed;
+    public bool gameActive = false;
+    private float _lastTouchedX;
 
     public Animator anim;
     Rigidbody rb;
 
     void Start()
     {
-        _currentSpeed = speed;
+        //_currentSpeed = speed;
         rb = GetComponent<Rigidbody>();
 
     }
@@ -25,35 +27,45 @@ public class PlayerController : MonoBehaviour
    
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            anim.SetBool("Run", true);
-        }
-
-        
-
-        if (isGliding)
+        if (gameActive)
         {
 
-            
 
-            if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+            Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed * Time.deltaTime);
+            transform.position = newPos;
+
+            if (isGliding)
             {
-                touchXdelta = Input.GetTouch(0).deltaPosition.x / Screen.width;
-            }else if (Input.GetMouseButton(0))
-            {
-                touchXdelta = Input.GetAxis("Mouse X");
-                anim.SetBool("Run", false);
+                 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
+                transform.position = newPos;
             }
 
-           
-
+            if (isGliding && Input.GetMouseButton(0))
+            {
+                float xAxis = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
+                this.transform.Translate(xAxis, 0, Time.deltaTime);
+               
             
+            }else if(isGliding && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                _lastTouchedX = Input.GetTouch(0).position.x;
+            
+            }else if (isGliding && Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                float xAxis = (_lastTouchedX - Input.GetTouch(0).position.x) / Screen.width;
+                _lastTouchedX = Input.GetTouch(0).position.x;
+                this.transform.Translate(xAxis, 0, _currentSpeed * Time.deltaTime);
+            }
+            else
+            {
+                return;
+            }
+
         }
-        newX = transform.position.x + xSpeed * Time.deltaTime * touchXdelta;
-        newX = Mathf.Clamp(newX, -limitX, limitX);
-        Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
-        transform.position = newPos;
+        else
+        {
+            return;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -89,11 +101,17 @@ public class PlayerController : MonoBehaviour
 
             rb.useGravity = false;
             rb.drag = 0.08f;
-            speed = 5000f;
+            _currentSpeed = 25f;
 
             isGliding = true;
         }
         
+    }
+
+   public void StartLevel()
+    {
+        gameActive = true;
+        anim.SetBool("Run", true);
     }
 
 
