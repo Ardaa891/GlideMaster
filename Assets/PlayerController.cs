@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Current;
     
     public float speed;
     private float _currentSpeed;
-    
+    public float thrust = 70f;
     public bool isGliding = false;
-    
+    public GameObject playButton;
     public float xSpeed;
     public bool gameActive = false;
     private float _lastTouchedX;
-
+    public Camera cam;
+    public float transitionSpeed;
+    public Vector3 camoOffset;
     public Animator anim;
+    public GameObject Wing;
     Rigidbody rb;
 
     void Start()
@@ -90,6 +94,14 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("falling", true);
             speed = 0f;
         }
+
+        if (other.CompareTag("up"))
+        {
+            rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
+            rb.useGravity = true;
+            StartCoroutine(turnOffGravity());
+            rb.drag = 0.08f;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -99,11 +111,8 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("fly", true);
             anim.SetBool("falling", false);
 
-            rb.useGravity = false;
-            rb.drag = 0.08f;
-            _currentSpeed = 25f;
-
-            isGliding = true;
+            StartCoroutine(wing());
+          
         }
         
     }
@@ -112,7 +121,27 @@ public class PlayerController : MonoBehaviour
     {
         gameActive = true;
         anim.SetBool("Run", true);
+        playButton.SetActive(false);
     }
+
+    IEnumerator turnOffGravity()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        rb.useGravity = false;
+    }
+
+    IEnumerator wing()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        Wing.SetActive(true);
+        rb.useGravity = false;
+        rb.drag = 0.2f;
+        _currentSpeed = 50f;
+
+        isGliding = true;
+
+    }
+
 
 
 

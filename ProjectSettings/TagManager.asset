@@ -7,6 +7,7 @@ TagManager:
   - trigger
   - wall
   - fall
+  - up
   layers:
   - Default
   - TransparentFX
