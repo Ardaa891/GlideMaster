@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 camoOffset;
     public Animator anim;
     public GameObject Wing;
+    public GameObject remy;
+    public GameObject panel;
     Rigidbody rb;
 
     void Start()
@@ -83,36 +86,53 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("trigger"))
         {
             anim.SetBool("Flip", false);
-            anim.SetBool("fidle", true);
+           
+           anim.SetBool("falling", true);
+            speed = 5f;
 
             rb.useGravity = true;
         }
 
-        if (other.CompareTag("fall"))
+        /*if (other.CompareTag("fall"))
         {
             anim.SetBool("fidle", false);
             anim.SetBool("falling", true);
-            speed = 0f;
-        }
+            speed = 5f;
+        }*/
 
         if (other.CompareTag("up"))
         {
+            
             rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
-            rb.useGravity = true;
+            
+            rb.useGravity = false;
             StartCoroutine(turnOffGravity());
-            rb.drag = 0.08f;
+            rb.drag = 1f;
+           transform.DOLocalRotate(new Vector3(0, 0, 360), 0.7f,RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+            Destroy(other.gameObject);
+            
+        }
+
+        if (other.CompareTag("Finish"))
+        {
+            gameActive = false;
+            panel.SetActive(true);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("fall"))
+        if (other.CompareTag("trigger"))
         {
             anim.SetBool("fly", true);
             anim.SetBool("falling", false);
 
             StartCoroutine(wing());
           
+        }
+        if (other.CompareTag("wall"))
+        {
+            rb.useGravity = true;
         }
         
     }
@@ -135,7 +155,7 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSecondsRealtime(2f);
         Wing.SetActive(true);
         rb.useGravity = false;
-        rb.drag = 0.2f;
+        rb.drag = 0.5f;
         _currentSpeed = 50f;
 
         isGliding = true;
