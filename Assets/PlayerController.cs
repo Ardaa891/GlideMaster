@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public bool isGliding = false;
     public GameObject playButton;
     public float xSpeed;
+    public float limitX;
     public bool gameActive = false;
     private float _lastTouchedX;
     public Camera cam;
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
     public GameObject remy;
     public GameObject panel;
     Rigidbody rb;
+    public GameObject wind;
+    public float windSpeed;
+    public bool windy = true;
 
     void Start()
     {
@@ -36,32 +40,57 @@ public class PlayerController : MonoBehaviour
     {
         if (gameActive)
         {
-
+            float newX = 0;
+            float touchXDelta = 0;
 
             Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed * Time.deltaTime);
             transform.position = newPos;
 
             if (isGliding)
             {
+                
                  newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
                 transform.position = newPos;
+                
+
+                if (windy)
+                {
+                    StartCoroutine(Windy());
+                   
+                    windy = false;
+                }
             }
 
             if (isGliding && Input.GetMouseButton(0))
             {
-                float xAxis = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
-                this.transform.Translate(xAxis, 0, Time.deltaTime);
-               
-            
-            }else if(isGliding && Input.GetTouch(0).phase == TouchPhase.Began)
+                //float xAxis = Mathf.Clamp(xAxis, -limitX, limitX);
+                //float xAxis = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
+                //this.transform.Translate(xAxis, 0, Time.deltaTime);
+                touchXDelta = Input.GetAxis("Mouse X");
+                newX = transform.position.x + xSpeed * touchXDelta * Time.deltaTime;
+                newX = Mathf.Clamp(newX, -limitX, limitX);
+
+                Vector3 newPosition = new Vector3(newX, transform.position.y, transform.position.z +  Time.deltaTime);
+                transform.position = newPosition;
+
+            }
+            else if(isGliding && Input.GetTouch(0).phase == TouchPhase.Began && Input.touchCount > 0)
             {
-                _lastTouchedX = Input.GetTouch(0).position.x;
+                touchXDelta = Input.GetTouch(0).position.x;
             
-            }else if (isGliding && Input.GetTouch(0).phase == TouchPhase.Moved)
+            }else if (isGliding && Input.GetTouch(0).phase == TouchPhase.Moved && Input.touchCount > 0)
             {
-                float xAxis = (_lastTouchedX - Input.GetTouch(0).position.x) / Screen.width;
-                _lastTouchedX = Input.GetTouch(0).position.x;
-                this.transform.Translate(xAxis, 0, _currentSpeed * Time.deltaTime);
+                //loat xAxis = (_lastTouchedX - Input.GetTouch(0).position.x) / Screen.width;
+                //_lastTouchedX = Input.GetTouch(0).position.x;
+                //this.transform.Translate(xAxis, 0, _currentSpeed * Time.deltaTime);
+
+                touchXDelta = Input.GetTouch(0).deltaPosition.x / Screen.width;
+
+                newX = transform.position.x + xSpeed * touchXDelta * Time.deltaTime;
+                newX = Mathf.Clamp(newX, -limitX, limitX);
+
+                Vector3 newPosition = new Vector3(newX, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
+                transform.position = newPosition;
             }
             else
             {
@@ -144,6 +173,12 @@ public class PlayerController : MonoBehaviour
         playButton.SetActive(false);
     }
 
+    public void Wind()
+    {
+        transform.GetChild(3).gameObject.SetActive(true);
+        
+    }
+
     IEnumerator turnOffGravity()
     {
         yield return new WaitForSecondsRealtime(2f);
@@ -160,6 +195,22 @@ public class PlayerController : MonoBehaviour
 
         isGliding = true;
 
+    }
+
+    IEnumerator Windy()
+    {
+        wind.SetActive(true);
+        
+        
+        yield return new WaitForSecondsRealtime(1f);
+        //Wind();
+        wind.SetActive(false);
+
+        
+        
+
+        
+    
     }
 
 
