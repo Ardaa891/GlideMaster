@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public GameObject playButton;
     public float xSpeed;
     public float limitX;
+    public float maxRot;
     public bool gameActive = false;
     private float _lastTouchedX;
     public Camera cam;
@@ -28,12 +29,17 @@ public class PlayerController : MonoBehaviour
     public float windSpeed;
     public bool windy = true;
     public GameObject plane;
+    public GameObject Enemy;
+    public GameObject Enemy2;
+    
 
     void Start()
     {
         //_currentSpeed = speed;
         rb = GetComponent<Rigidbody>();
         Application.targetFrameRate = 60;
+        DOTween.Init();
+       
     }
 
    
@@ -43,6 +49,7 @@ public class PlayerController : MonoBehaviour
         {
             float newX = 0;
             float touchXDelta = 0;
+           
 
             Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed * Time.deltaTime);
             transform.position = newPos;
@@ -69,6 +76,34 @@ public class PlayerController : MonoBehaviour
                 Vector3 newPosition = new Vector3(newX, transform.position.y, transform.position.z +  Time.deltaTime);
                 transform.position = newPosition;
 
+                if (touchXDelta >= -limitX && touchXDelta < 0)
+                {
+                    transform.DORotate(new Vector3(0, 0, 30), 0.2f, RotateMode.FastBeyond360).SetEase(Ease.Linear).OnComplete(()=>Rot());
+
+
+                    /*Debug.Log("FUCK");
+
+                    //newRot = transform.rotation.z + rotSpeed *Time.deltaTime;
+                    newRot = Mathf.Clamp(newRot, -maxRot, maxRot);
+                    transform.rotation = Quaternion.Euler(0, 0, newRot);
+
+                    newRot += rotSpeed * Time.deltaTime;
+
+                    if (isGliding && Input.GetMouseButtonUp(0))
+                    {
+                        
+                        transform.rotation = rot;
+
+                        
+                    }*/
+
+
+                }
+                if(touchXDelta <= limitX && touchXDelta > 0)
+                {
+                    transform.DORotate(new Vector3(0, 0, -30), 0.2f, RotateMode.Fast).SetEase(Ease.Linear).OnComplete(() => Rot());
+                }
+                
             }
             else if(isGliding && Input.GetTouch(0).phase == TouchPhase.Began && Input.touchCount > 0)
             {
@@ -114,7 +149,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Flip", false);
            
            anim.SetBool("falling", true);
-            speed = 5f;
+            speed = 0f;
 
             rb.useGravity = true;
             
@@ -146,10 +181,13 @@ public class PlayerController : MonoBehaviour
             panel.SetActive(true);
         }
 
-       /* if(other.gameObject.layer == 3)
+        if (other.CompareTag("Enemy"))
         {
-            transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
-        }*/
+            anim.SetTrigger("Kick");
+            StartCoroutine(kill());
+        }
+
+      
     }
 
     private void OnTriggerExit(Collider other)
@@ -201,6 +239,23 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    IEnumerator kill()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
+        Enemy.gameObject.SetActive(false);
+        
+    }
+
+    IEnumerator kill2()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
+        Enemy2.gameObject.SetActive(false);
+    }
+
+    void Rot()
+    {
+        transform.DOLocalRotate(new Vector3(0, 0, 0), 0.2f, RotateMode.Fast).SetEase(Ease.Linear);
+    }
    
 
 
