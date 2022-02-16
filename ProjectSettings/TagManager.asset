@@ -9,6 +9,7 @@ TagManager:
   - fall
   - up
   - Enemy
+  - Bad
   layers:
   - Default
   - TransparentFX

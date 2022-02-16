@@ -78,28 +78,13 @@ public class PlayerController : MonoBehaviour
 
                 if (touchXDelta >= -limitX && touchXDelta < 0)
                 {
-                    transform.DORotate(new Vector3(0, 0, 30), 0.2f, RotateMode.FastBeyond360).SetEase(Ease.Linear).OnComplete(()=>Rot());
+                    transform.DORotate(new Vector3(0, 0, 30), 0.2f, RotateMode.Fast).SetEase(Ease.Linear).OnComplete(()=>Rot1());
 
 
-                    /*Debug.Log("FUCK");
-
-                    //newRot = transform.rotation.z + rotSpeed *Time.deltaTime;
-                    newRot = Mathf.Clamp(newRot, -maxRot, maxRot);
-                    transform.rotation = Quaternion.Euler(0, 0, newRot);
-
-                    newRot += rotSpeed * Time.deltaTime;
-
-                    if (isGliding && Input.GetMouseButtonUp(0))
-                    {
-                        
-                        transform.rotation = rot;
-
-                        
-                    }*/
 
 
                 }
-                if(touchXDelta <= limitX && touchXDelta > 0)
+                else if(touchXDelta <= limitX && touchXDelta > 0)
                 {
                     transform.DORotate(new Vector3(0, 0, -30), 0.2f, RotateMode.Fast).SetEase(Ease.Linear).OnComplete(() => Rot());
                 }
@@ -122,6 +107,19 @@ public class PlayerController : MonoBehaviour
 
                 Vector3 newPosition = new Vector3(newX, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
                 transform.position = newPosition;
+
+                if (touchXDelta >= -limitX && touchXDelta < 0)
+                {
+                    transform.DORotate(new Vector3(0, 0, 30), 0.2f, RotateMode.Fast).SetEase(Ease.Linear).OnComplete(() => Rot1());
+
+
+
+
+                }
+                else if (touchXDelta <= limitX && touchXDelta > 0)
+                {
+                    transform.DORotate(new Vector3(0, 0, -30), 0.2f, RotateMode.Fast).SetEase(Ease.Linear).OnComplete(() => Rot());
+                }
             }
             else
             {
@@ -184,7 +182,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             anim.SetTrigger("Kick");
-            StartCoroutine(kill());
+            
         }
 
       
@@ -254,9 +252,14 @@ public class PlayerController : MonoBehaviour
 
     void Rot()
     {
+        transform.DOLocalRotate(new Vector3(0, 0, -1), 0.2f, RotateMode.Fast).SetEase(Ease.Linear);
+    }
+
+    void Rot1()
+    {
         transform.DOLocalRotate(new Vector3(0, 0, 0), 0.2f, RotateMode.Fast).SetEase(Ease.Linear);
     }
-   
+
 
 
 
