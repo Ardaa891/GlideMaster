@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
+    public static Enemy Current;
     public GameObject badGuy;
-    Animator anim;
+    public Animator anim;
     Rigidbody rb;
+    public TextMeshPro enemyScore;
+    public float _score;
 
     
     void Start()
     {
+        Current = this;
         anim = badGuy.GetComponent<Animator>();
         rb = badGuy.GetComponent<Rigidbody>();
     }
@@ -19,8 +25,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            anim.SetTrigger("Hit");
-            StartCoroutine(Die());
+            if(_score > LevelController.Current.score)
+            {
+                anim.SetBool("Idle", true);
+            }else if(_score < LevelController.Current.score)
+            {
+                anim.SetBool("Hit", true);
+            }
+           // anim.SetBool("Hit",true);
+            
         }
     }
 
@@ -35,10 +48,15 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
 
         rb.useGravity = true;
-        anim.SetBool("Fall", true);
+        
         badGuy.gameObject.SetActive(false);
 
 
 
+    }
+
+    public void Still()
+    {
+        anim.SetBool("Idle", true);
     }
 }

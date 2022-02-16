@@ -14,23 +14,23 @@ public class PlayerController : MonoBehaviour
     public GameObject playButton;
     public float xSpeed;
     public float limitX;
-    public float maxRot;
+    public bool isFinished = false;
     public bool gameActive = false;
-    private float _lastTouchedX;
-    public Camera cam;
+    
+    
     public float transitionSpeed;
-    public Vector3 camoOffset;
+    
     public Animator anim;
     public GameObject Wing;
+    public GameObject diamondWing;
+    public GameObject goldenWing;
     public GameObject remy;
     public GameObject panel;
     Rigidbody rb;
-    public GameObject wind;
-    public float windSpeed;
+   
     public bool windy = true;
     public GameObject plane;
-    public GameObject Enemy;
-    public GameObject Enemy2;
+    
     
 
     void Start()
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Application.targetFrameRate = 60;
         DOTween.Init();
+        Current = this;
        
     }
 
@@ -53,6 +54,20 @@ public class PlayerController : MonoBehaviour
 
             Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed * Time.deltaTime);
             transform.position = newPos;
+
+            if (gameActive && isFinished)
+            {
+                Vector3 finalPos = new Vector3(0, transform.position.y, transform.position.z + _currentSpeed* Time.deltaTime);
+                //transform.position = finalPos;
+                transform.DOMoveX(0, 1f);
+                
+
+                
+
+                
+
+               
+            }
 
             if (isGliding)
             {
@@ -105,7 +120,7 @@ public class PlayerController : MonoBehaviour
                 newX = transform.position.x + xSpeed * touchXDelta * Time.deltaTime;
                 newX = Mathf.Clamp(newX, -limitX, limitX);
 
-                Vector3 newPosition = new Vector3(newX, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
+                Vector3 newPosition = new Vector3(newX, transform.position.y, transform.position.z + 50f * Time.deltaTime);
                 transform.position = newPosition;
 
                 if (touchXDelta >= -limitX && touchXDelta < 0)
@@ -120,7 +135,12 @@ public class PlayerController : MonoBehaviour
                 {
                     transform.DORotate(new Vector3(0, 0, -30), 0.2f, RotateMode.Fast).SetEase(Ease.Linear).OnComplete(() => Rot());
                 }
+
+                
+
+
             }
+          
             else
             {
                 return;
@@ -169,20 +189,73 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
            transform.DOLocalRotate(new Vector3(0, 0, 360), 0.7f,RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+            LevelController.Current.ChangeScore(2);
             Destroy(other.gameObject);
             
         }
 
+        if (other.CompareTag("down"))
+        {
+            rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
+            rb.useGravity = false;
+            StartCoroutine(turnOffGravity());
+            rb.drag = 1f;
+            transform.DOLocalRotate(new Vector3(0, 0, 360), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+            LevelController.Current.ChangeScore(-2);
+            Destroy(other.gameObject);
+        }
+
         if (other.CompareTag("Finish"))
         {
-            gameActive = false;
-            panel.SetActive(true);
+            isFinished = true;
+            //gameActive = false;
+            //panel.SetActive(true);
         }
 
         if (other.CompareTag("Enemy"))
         {
-            anim.SetTrigger("Kick");
-            
+            float enemyScore = other.GetComponent<Enemy>()._score;
+
+            if(LevelController.Current.score < enemyScore)
+            {
+                gameActive = false;
+                panel.SetActive(true);
+
+            }else if (LevelController.Current.score > enemyScore)
+            {
+                LevelController.Current.FightScore(10);
+
+                anim.SetTrigger("Kick");
+            }
+       
+        }
+
+        if (other.CompareTag("FinishEnemy"))
+        {
+            float enemyScore = other.GetComponent<Enemy>()._score;
+
+            if (LevelController.Current.score < enemyScore)
+            {
+                gameActive = false;
+                panel.SetActive(true);
+                anim.SetBool("Idle", true);
+                anim.SetBool("fly", false);
+
+                Enemy.Current.Still();
+
+            }
+            else if (LevelController.Current.score > enemyScore)
+            {
+                
+
+                anim.SetTrigger("Kick");
+            }
+        }
+
+        if (other.CompareTag("Endlevel"))
+        {
+            gameActive = false;
+            panel.SetActive(true);
         }
 
       
@@ -201,6 +274,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("wall"))
         {
             rb.useGravity = true;
+            plane.SetActive(false);
 
         }
         
@@ -213,11 +287,7 @@ public class PlayerController : MonoBehaviour
         playButton.SetActive(false);
     }
 
-    public void Wind()
-    {
-        transform.GetChild(3).gameObject.SetActive(true);
-        
-    }
+    
 
     IEnumerator turnOffGravity()
     {
@@ -227,28 +297,17 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator wing()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1f);
         Wing.SetActive(true);
         rb.useGravity = false;
-        rb.drag = 0.5f;
+        rb.drag = 0.22f;
         _currentSpeed = 50f;
 
         isGliding = true;
 
     }
 
-    IEnumerator kill()
-    {
-        yield return new WaitForSecondsRealtime(0.2f);
-        Enemy.gameObject.SetActive(false);
-        
-    }
-
-    IEnumerator kill2()
-    {
-        yield return new WaitForSecondsRealtime(0.2f);
-        Enemy2.gameObject.SetActive(false);
-    }
+    
 
     void Rot()
     {
