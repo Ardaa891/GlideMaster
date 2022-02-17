@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
             float touchXDelta = 0;
            
 
-            Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + speed * Time.deltaTime);
+            Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 15 * Time.deltaTime);
             transform.position = newPos;
 
             if (gameActive && isFinished)
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
             if (isGliding)
             {
                 
-                 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
+                 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 75 * Time.deltaTime);
                 transform.position = newPos;
                 
 
