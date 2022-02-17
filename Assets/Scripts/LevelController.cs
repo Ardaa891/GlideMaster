@@ -80,17 +80,22 @@ public class LevelController : MonoBehaviour
         
         
 
-        if(score >= 10)
+        if(score >= 4)
         {
             adjectiveText.text = "Intermediate";
             PlayerController.Current.Wing.SetActive(false);
             PlayerController.Current.diamondWing.SetActive(true);
         } 
-        if (score >= 20)
+        if (score >= 8)
         {
             adjectiveText.text = "Advanced";
             PlayerController.Current.diamondWing.SetActive(false);
             PlayerController.Current.goldenWing.SetActive(true);
+        }
+        if(score < 8 && score > 4)
+        {
+            PlayerController.Current.goldenWing.SetActive(false);
+            PlayerController.Current.diamondWing.SetActive(true);
         }
         if(score < 10)
         {

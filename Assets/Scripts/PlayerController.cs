@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
    
     public bool windy = true;
     public GameObject plane;
+    [SerializeField]
+    public GameObject finishEnemy;
     
     
 
@@ -57,8 +59,9 @@ public class PlayerController : MonoBehaviour
 
             if (gameActive && isFinished)
             {
-                Vector3 finalPos = new Vector3(0, transform.position.y, transform.position.z + _currentSpeed* Time.deltaTime);
-                //transform.position = finalPos;
+                float desiredYPos = (finishEnemy.transform.position.y + 5);
+
+                transform.DOMoveY(desiredYPos, 0.8f);
                 transform.DOMoveX(0, 1f);
                 
 
@@ -72,7 +75,7 @@ public class PlayerController : MonoBehaviour
             if (isGliding)
             {
                 
-                 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 75 * Time.deltaTime);
+                 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 70 * Time.deltaTime);
                 transform.position = newPos;
                 
 
