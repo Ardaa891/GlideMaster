@@ -59,23 +59,25 @@ public class PlayerController : MonoBehaviour
 
             if (gameActive && isFinished)
             {
+
+                _currentSpeed = 40;
                 float desiredYPos = (finishEnemy.transform.position.y + 5);
 
                 transform.DOMoveY(desiredYPos, 0.8f);
                 transform.DOMoveX(0, 1f);
-                
 
                 
 
-                
 
-               
+
+
+
             }
 
             if (isGliding)
             {
                 
-                 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 70 * Time.deltaTime);
+                 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + _currentSpeed * Time.deltaTime);
                 transform.position = newPos;
                 
 
@@ -280,10 +282,23 @@ public class PlayerController : MonoBehaviour
             plane.SetActive(false);
 
         }
+
+        if (other.CompareTag("Enemy"))
+        {
+            _currentSpeed = 65;
+        }
+        
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            _currentSpeed = 50;
+        }
         
     }
 
-   public void StartLevel()
+    public void StartLevel()
     {
         gameActive = true;
         anim.SetBool("Run", true);
@@ -304,7 +319,7 @@ public class PlayerController : MonoBehaviour
         Wing.SetActive(true);
         rb.useGravity = false;
         rb.drag = 0.22f;
-        _currentSpeed = 50f;
+        _currentSpeed = 65f;
 
         isGliding = true;
 
