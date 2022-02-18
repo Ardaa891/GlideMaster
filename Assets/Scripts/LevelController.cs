@@ -54,6 +54,7 @@ public class LevelController : MonoBehaviour
         
             score += increment;
 
+        PlayerController.Current.sizeAnim.SetTrigger("size");
        
         
     }
@@ -63,9 +64,12 @@ public class LevelController : MonoBehaviour
         if(score > enemyScore)
         {
             score += increment;
-        }else if (score < enemyScore)
+            PlayerController.Current.sizeAnim.SetTrigger("size");
+        }
+        else if (score < enemyScore)
         {
             score--;
+            PlayerController.Current.sizeAnim.SetTrigger("size");
         }
 
        
@@ -85,14 +89,16 @@ public class LevelController : MonoBehaviour
             adjectiveText.text = "Intermediate";
             PlayerController.Current.Wing.SetActive(false);
             PlayerController.Current.diamondWing.SetActive(true);
+            PlayerController.Current.diamondEffect.SetActive(true);
         } 
-        if (score >= 8)
+        if (score >= 15)
         {
             adjectiveText.text = "Advanced";
             PlayerController.Current.diamondWing.SetActive(false);
             PlayerController.Current.goldenWing.SetActive(true);
+            PlayerController.Current.goldenEffect.SetActive(true);
         }
-        if(score < 8 && score > 4)
+        if(score < 15 && score > 4)
         {
             PlayerController.Current.goldenWing.SetActive(false);
             PlayerController.Current.diamondWing.SetActive(true);

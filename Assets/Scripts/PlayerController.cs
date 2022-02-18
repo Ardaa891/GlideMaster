@@ -32,6 +32,12 @@ public class PlayerController : MonoBehaviour
     public GameObject plane;
     [SerializeField]
     public GameObject finishEnemy;
+    public GameObject charUI;
+    public GameObject diamondEffect;
+    public GameObject goldenEffect;
+    public GameObject scoreImage;
+    public Animator sizeAnim;
+    public GameObject finishStar;
     
     
 
@@ -42,7 +48,7 @@ public class PlayerController : MonoBehaviour
         Application.targetFrameRate = 60;
         DOTween.Init();
         Current = this;
-       
+        sizeAnim = scoreImage.GetComponent<Animator>();
     }
 
    
@@ -225,6 +231,7 @@ public class PlayerController : MonoBehaviour
             {
                 gameActive = false;
                 panel.SetActive(true);
+                
 
             }else if (LevelController.Current.score > enemyScore)
             {
@@ -243,6 +250,7 @@ public class PlayerController : MonoBehaviour
             {
                 gameActive = false;
                 panel.SetActive(true);
+                finishStar.SetActive(true);
                 anim.SetBool("Idle", true);
                 anim.SetBool("fly", false);
 
@@ -261,6 +269,7 @@ public class PlayerController : MonoBehaviour
         {
             gameActive = false;
             panel.SetActive(true);
+            finishEnemy.SetActive(true);
         }
 
       
@@ -320,7 +329,7 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = false;
         rb.drag = 0.22f;
         _currentSpeed = 65f;
-
+        charUI.SetActive(true);
         isGliding = true;
 
     }

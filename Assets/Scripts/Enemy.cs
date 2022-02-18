@@ -12,7 +12,8 @@ public class Enemy : MonoBehaviour
     Rigidbody rb;
     public TextMeshPro enemyScore;
     public float _score;
-
+    public GameObject hitEffect;
+    public GameObject confetti;
     
     void Start()
     {
@@ -28,9 +29,13 @@ public class Enemy : MonoBehaviour
             if(_score > LevelController.Current.score)
             {
                 anim.SetBool("Idle", true);
+                
             }else if(_score < LevelController.Current.score)
             {
                 anim.SetBool("Hit", true);
+                hitEffect.SetActive(true);
+                confetti.SetActive(true);
+                StartCoroutine(Die());
             }
            // anim.SetBool("Hit",true);
             
@@ -45,11 +50,11 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         rb.useGravity = true;
         
-        badGuy.gameObject.SetActive(false);
+        gameObject.SetActive(false);
 
 
 
