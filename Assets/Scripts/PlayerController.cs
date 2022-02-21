@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     public bool gameActive = false;
     
     
-    public float transitionSpeed;
+    
     
     public Animator anim;
     public GameObject Wing;
@@ -38,11 +38,13 @@ public class PlayerController : MonoBehaviour
     public GameObject scoreImage;
     public Animator sizeAnim;
     public GameObject finishStar;
+    public GameObject World;
     
     
 
     void Start()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         //_currentSpeed = speed;
         rb = GetComponent<Rigidbody>();
         Application.targetFrameRate = 60;
@@ -193,9 +195,10 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("up"))
         {
-            
-            rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
-            
+            float worldYpos = (World.transform.position.y);
+
+            //rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
+            World.transform.DOMoveY(worldYpos-15, 0.5f).SetEase(Ease.OutCirc);
             rb.useGravity = false;
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
@@ -207,7 +210,9 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("down"))
         {
-            rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
+            float worldYpos = (World.transform.position.y);
+            World.transform.DOMoveY(worldYpos + 15, 0.5f).SetEase(Ease.OutCirc);
+            //rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
             rb.useGravity = false;
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
