@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     public Animator sizeAnim;
     public GameObject finishStar;
     public GameObject World;
+    public GameObject Collectables;
+    public GameObject Finish;
     
     
 
@@ -195,7 +197,15 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("up"))
         {
+            
             float worldYpos = (World.transform.position.y);
+            float colYpos = (Collectables.transform.position.y);
+            float charYpos = (gameObject.transform.position.y);
+            float finishYpos = (Finish.transform.position.y);
+            
+            transform.DOMoveY(charYpos + 5, 0.5f).SetEase(Ease.Linear);
+            Collectables.transform.DOMoveY(colYpos + 3, 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos - 10 , 0.5f).SetEase(Ease.Linear);
 
             //rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
             World.transform.DOMoveY(worldYpos-15, 0.5f).SetEase(Ease.OutCirc);
@@ -210,7 +220,16 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("down"))
         {
+
             float worldYpos = (World.transform.position.y);
+            float finishYpos = (Finish.transform.position.y);
+            float colYpos = (Collectables.transform.position.y);
+            float charYpos = (gameObject.transform.position.y);
+
+            transform.DOMoveY(charYpos - 5, 0.5f).SetEase(Ease.Linear);
+            Collectables.transform.DOMoveY(colYpos - 3, 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos + 7, 0.5f).SetEase(Ease.Linear);
+
             World.transform.DOMoveY(worldYpos + 15, 0.5f).SetEase(Ease.OutCirc);
             //rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
             rb.useGravity = false;
