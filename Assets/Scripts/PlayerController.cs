@@ -203,16 +203,16 @@ public class PlayerController : MonoBehaviour
             float charYpos = (gameObject.transform.position.y);
             float finishYpos = (Finish.transform.position.y);
             
-            transform.DOMoveY(charYpos + 5, 0.5f).SetEase(Ease.Linear);
-            Collectables.transform.DOMoveY(colYpos + 3, 0.5f).SetEase(Ease.Linear);
+            transform.DOMoveY(charYpos + 5f, 0.5f).SetEase(Ease.Linear);
+            Collectables.transform.DOMoveY(colYpos + 4.5f, 0.5f).SetEase(Ease.Linear);
             Finish.transform.DOMoveY(finishYpos - 10 , 0.5f).SetEase(Ease.Linear);
 
             //rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
-            World.transform.DOMoveY(worldYpos-15, 0.5f).SetEase(Ease.OutCirc);
+            World.transform.DOMoveY(worldYpos - 10, 0.5f).SetEase(Ease.OutCirc);
             rb.useGravity = false;
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
-           transform.DOLocalRotate(new Vector3(0, 0, 360), 0.7f,RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+           transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f,RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             LevelController.Current.ChangeScore(2);
             Destroy(other.gameObject);
             
@@ -227,15 +227,15 @@ public class PlayerController : MonoBehaviour
             float charYpos = (gameObject.transform.position.y);
 
             transform.DOMoveY(charYpos - 5, 0.5f).SetEase(Ease.Linear);
-            Collectables.transform.DOMoveY(colYpos - 3, 0.5f).SetEase(Ease.Linear);
+            Collectables.transform.DOMoveY(colYpos - 4.5f, 0.5f).SetEase(Ease.Linear);
             Finish.transform.DOMoveY(finishYpos + 7, 0.5f).SetEase(Ease.Linear);
 
-            World.transform.DOMoveY(worldYpos + 15, 0.5f).SetEase(Ease.OutCirc);
+            World.transform.DOMoveY(worldYpos + 10, 0.5f).SetEase(Ease.OutCirc);
             //rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
             rb.useGravity = false;
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
-            transform.DOLocalRotate(new Vector3(0, 0, 360), 0.7f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+            transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             LevelController.Current.ChangeScore(-2);
             Destroy(other.gameObject);
         }
