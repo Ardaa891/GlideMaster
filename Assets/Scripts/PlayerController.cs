@@ -179,11 +179,12 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("trigger"))
         {
-            anim.SetBool("Flip", false);
-           
-           anim.SetBool("falling", true);
-            speed = 0f;
+           anim.SetBool("Flip", false);
 
+            //anim.SetBool("falling", true);
+            anim.SetBool("fly", true);
+            speed = 0f;
+            StartCoroutine(wing());
             rb.useGravity = true;
             
         }
@@ -204,11 +205,11 @@ public class PlayerController : MonoBehaviour
             float finishYpos = (Finish.transform.position.y);
             
             transform.DOMoveY(charYpos + 5f, 0.5f).SetEase(Ease.Linear);
-            Collectables.transform.DOMoveY(colYpos + 4.5f, 0.5f).SetEase(Ease.Linear);
-            Finish.transform.DOMoveY(finishYpos - 10 , 0.5f).SetEase(Ease.Linear);
+            Collectables.transform.DOMoveY(colYpos + 5f, 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos - 5 , 0.5f).SetEase(Ease.Linear);
 
             //rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
-            World.transform.DOMoveY(worldYpos - 10, 0.5f).SetEase(Ease.OutCirc);
+            World.transform.DOMoveY(worldYpos - 7, 0.5f).SetEase(Ease.OutCirc);
             rb.useGravity = false;
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
@@ -230,7 +231,7 @@ public class PlayerController : MonoBehaviour
             Collectables.transform.DOMoveY(colYpos - 4.5f, 0.5f).SetEase(Ease.Linear);
             Finish.transform.DOMoveY(finishYpos + 7, 0.5f).SetEase(Ease.Linear);
 
-            World.transform.DOMoveY(worldYpos + 10, 0.5f).SetEase(Ease.OutCirc);
+            World.transform.DOMoveY(worldYpos + 7, 0.5f).SetEase(Ease.OutCirc);
             //rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
             rb.useGravity = false;
             StartCoroutine(turnOffGravity());
@@ -303,11 +304,14 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("trigger"))
         {
-            anim.SetBool("fly", true);
-            anim.SetBool("falling", false);
-           
-            StartCoroutine(wing());
-          
+            //anim.SetBool("fly", true);
+            //anim.SetBool("falling", false);
+            
+
+            //anim.SetBool("falling", true);
+            
+            //StartCoroutine(wing());
+
         }
         if (other.CompareTag("wall"))
         {
@@ -348,7 +352,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator wing()
     {
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.5f);
         Wing.SetActive(true);
         rb.useGravity = false;
         rb.drag = 0.22f;
