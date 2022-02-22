@@ -33,9 +33,11 @@ public class Enemy : MonoBehaviour
             }else if(_score < LevelController.Current.score)
             {
                 anim.SetBool("Hit", true);
-                hitEffect.SetActive(true);
+                StartCoroutine(Hit());
+                //hitEffect.SetActive(true);
                 confetti.SetActive(true);
                 StartCoroutine(Die());
+                
             }
            // anim.SetBool("Hit",true);
             
@@ -50,15 +52,24 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.7f);
 
         rb.useGravity = true;
         
         gameObject.SetActive(false);
 
-
+        
 
     }
+    
+    IEnumerator Hit()
+    {
+        yield return new WaitForSecondsRealtime(0.07f);
+
+        hitEffect.SetActive(true);
+    }
+
+    
 
     public void Still()
     {

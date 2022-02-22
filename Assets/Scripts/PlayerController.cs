@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     public GameObject Collectables;
     public GameObject Finish;
     public GameObject backpack;
+    public Animator uiAnim;
     
     
 
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
         DOTween.Init();
         Current = this;
         sizeAnim = scoreImage.GetComponent<Animator>();
+        uiAnim = charUI.GetComponent<Animator>();
     }
 
    
@@ -65,17 +67,19 @@ public class PlayerController : MonoBehaviour
             float touchXDelta = 0;
            
 
-            Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 15 * Time.deltaTime);
+            Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 20 * Time.deltaTime);
             transform.position = newPos;
 
             if (gameActive && isFinished)
             {
 
-                _currentSpeed = 40;
+                _currentSpeed = 35;
+                uiAnim.SetBool("descale", true);
                 float desiredYPos = (finishEnemy.transform.position.y + 5);
+                float desiredXPos = (finishEnemy.transform.position.x);
 
-                transform.DOMoveY(desiredYPos, 0.8f);
-                transform.DOMoveX(0, 1f);
+                transform.DOMoveY(desiredYPos, 7f);
+                transform.DOMoveX(desiredXPos, 1f);
 
                 
 
@@ -209,7 +213,7 @@ public class PlayerController : MonoBehaviour
             
             transform.DOMoveY(charYpos + 5f, 0.5f).SetEase(Ease.Linear);
             Collectables.transform.DOMoveY(colYpos + 5f, 0.5f).SetEase(Ease.Linear);
-            Finish.transform.DOMoveY(finishYpos - 3 , 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos - 1 , 0.5f).SetEase(Ease.Linear);
 
             //rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
             World.transform.DOMoveY(worldYpos - 7, 0.5f).SetEase(Ease.OutCirc);
@@ -232,7 +236,7 @@ public class PlayerController : MonoBehaviour
 
             transform.DOMoveY(charYpos - 5, 0.5f).SetEase(Ease.Linear);
             Collectables.transform.DOMoveY(colYpos - 4.5f, 0.5f).SetEase(Ease.Linear);
-            Finish.transform.DOMoveY(finishYpos + 5, 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos + 1, 0.5f).SetEase(Ease.Linear);
 
             World.transform.DOMoveY(worldYpos + 7, 0.5f).SetEase(Ease.OutCirc);
             //rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
@@ -355,7 +359,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator wing()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.1f);
         Wing.SetActive(true);
         rb.useGravity = false;
         rb.drag = 0.22f;
