@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public GameObject World;
     public GameObject Collectables;
     public GameObject Finish;
+    public GameObject backpack;
     
     
 
@@ -174,6 +175,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("Flip", true);
             anim.SetBool("Run", false);
+            anim.SetBool("Idle", false);
            
         }
 
@@ -183,6 +185,7 @@ public class PlayerController : MonoBehaviour
 
             //anim.SetBool("falling", true);
             anim.SetBool("fly", true);
+            anim.SetBool("Idle", false);
             speed = 0f;
             StartCoroutine(wing());
             rb.useGravity = true;
@@ -206,7 +209,7 @@ public class PlayerController : MonoBehaviour
             
             transform.DOMoveY(charYpos + 5f, 0.5f).SetEase(Ease.Linear);
             Collectables.transform.DOMoveY(colYpos + 5f, 0.5f).SetEase(Ease.Linear);
-            Finish.transform.DOMoveY(finishYpos - 5 , 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos - 3 , 0.5f).SetEase(Ease.Linear);
 
             //rb.AddForce(0, thrust, 0, ForceMode.Impulse) ;
             World.transform.DOMoveY(worldYpos - 7, 0.5f).SetEase(Ease.OutCirc);
@@ -229,7 +232,7 @@ public class PlayerController : MonoBehaviour
 
             transform.DOMoveY(charYpos - 5, 0.5f).SetEase(Ease.Linear);
             Collectables.transform.DOMoveY(colYpos - 4.5f, 0.5f).SetEase(Ease.Linear);
-            Finish.transform.DOMoveY(finishYpos + 7, 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos + 5, 0.5f).SetEase(Ease.Linear);
 
             World.transform.DOMoveY(worldYpos + 7, 0.5f).SetEase(Ease.OutCirc);
             //rb.AddForce(0, -thrust, 0, ForceMode.Impulse);

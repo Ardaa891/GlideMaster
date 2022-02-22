@@ -88,6 +88,7 @@ public class LevelController : MonoBehaviour
         {
             adjectiveText.text = "Intermediate";
             PlayerController.Current.Wing.SetActive(false);
+            PlayerController.Current.backpack.SetActive(false);
             PlayerController.Current.diamondWing.SetActive(true);
             PlayerController.Current.diamondEffect.SetActive(true);
         } 
