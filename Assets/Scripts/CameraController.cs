@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Current;
     public Transform target;
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
-    
-    
+
+    private void Start()
+    {
+        Current = this;
+    }
+
     public void Update()
     {
         Vector3 desiredPosition = target.position + offset;

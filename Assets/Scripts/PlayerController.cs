@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public float limitX;
     public bool isFinished = false;
     public bool gameActive = false;
-    
+    public bool firstCol = false;
     
     
     
@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     public GameObject Finish;
     public GameObject backpack;
     public Animator uiAnim;
+    Sequence seq;
+    public GameObject levelFailedMenu;
     
     
 
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
    
     void Update()
     {
+        seq = DOTween.Sequence();
         if (gameActive)
         {
             float newX = 0;
@@ -171,6 +174,26 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+
+        if (firstCol)
+        {
+            if(LevelController.Current.score <= 0)
+            {
+                seq.Append(transform.DOMoveY(-100, 5f));
+                seq.Join(transform.DOLocalRotate(new Vector3(0, 0, 3600), 5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental));
+                StartCoroutine(Die());
+                CameraController.Current.target = null;
+                uiAnim.SetBool("descale", true);
+                levelFailedMenu.SetActive(true);
+            }
+            else
+            {
+                return;
+            }
+
+            
+        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -205,7 +228,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("up"))
         {
-            
+            firstCol = true;
             float worldYpos = (World.transform.position.y);
             float colYpos = (Collectables.transform.position.y);
             float charYpos = (gameObject.transform.position.y);
@@ -228,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("down"))
         {
-
+            firstCol = true;
             float worldYpos = (World.transform.position.y);
             float finishYpos = (Finish.transform.position.y);
             float colYpos = (Collectables.transform.position.y);
@@ -261,11 +284,18 @@ public class PlayerController : MonoBehaviour
 
             if(LevelController.Current.score < enemyScore)
             {
-                gameActive = false;
-                panel.SetActive(true);
-                
+                seq.Append(transform.DOMoveY(-100, 5f));
+                seq.Join(transform.DOLocalRotate(new Vector3(0, 0, 3600), 5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental)) ;
+                StartCoroutine(Die());
+                CameraController.Current.target = null;
+                uiAnim.SetBool("descale", true);
+                //gameActive = false;
+                levelFailedMenu.SetActive(true);
 
-            }else if (LevelController.Current.score > enemyScore)
+
+
+            }
+            else if (LevelController.Current.score > enemyScore)
             {
                 LevelController.Current.FightScore(10);
 
@@ -302,6 +332,17 @@ public class PlayerController : MonoBehaviour
             gameActive = false;
             panel.SetActive(true);
             finishEnemy.SetActive(true);
+        }
+
+        if (firstCol && other.CompareTag("down"))
+        {
+            seq.Append(transform.DOMoveY(-100, 5f));
+            seq.Join(transform.DOLocalRotate(new Vector3(0, 0, 3600), 5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental));
+            StartCoroutine(Die());
+            CameraController.Current.target = null;
+            uiAnim.SetBool("descale", true);
+            //gameActive = false;
+            levelFailedMenu.SetActive(true);
         }
 
       
@@ -367,6 +408,12 @@ public class PlayerController : MonoBehaviour
         charUI.SetActive(true);
         isGliding = true;
 
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSecondsRealtime(5f);
+        gameObject.SetActive(false);
     }
 
     
