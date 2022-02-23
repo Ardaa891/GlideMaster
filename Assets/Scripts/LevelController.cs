@@ -62,7 +62,7 @@ public class LevelController : MonoBehaviour
         {
             
 
-            //FindObjectOfType<SkillManager>().SetFinishSkillPanel();
+           
 
             PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
             yield return new WaitForSeconds(.5f);
