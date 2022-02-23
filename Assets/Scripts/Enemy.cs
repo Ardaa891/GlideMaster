@@ -26,11 +26,11 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(_score > LevelController.Current.score)
+            if(_score > PlayerController.Current.score)
             {
                 anim.SetBool("Idle", true);
                 
-            }else if(_score < LevelController.Current.score)
+            }else if(_score < PlayerController.Current.score)
             {
                 anim.SetBool("Hit", true);
                 StartCoroutine(Hit());

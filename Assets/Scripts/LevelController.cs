@@ -10,11 +10,8 @@ public class LevelController : MonoBehaviour
     public static LevelController Current;
     public List<GameObject> levels = new List<GameObject>();
     public GameObject gameOverMenu, finishGameMenu;
-    public TextMeshPro scoreText, enemyScoreText,  adjectiveText;
+    public TextMeshPro  enemyScoreText;
     public bool gameActive = false;
-    public int score;
-    
-    public int enemyScore;
    
 
     [Space]
@@ -99,7 +96,7 @@ public class LevelController : MonoBehaviour
 
     }
 
-    public void ChangeScore(int increment)
+    /*public void ChangeScore(int increment)
     {
         
         
@@ -126,9 +123,9 @@ public class LevelController : MonoBehaviour
        
         
         
-    }
+    }*/
 
-    public void Update()
+    /*public void Update()
     {
         scoreText.text = score.ToString();
 
@@ -171,7 +168,7 @@ public class LevelController : MonoBehaviour
         }
      
         
-    }
+    }*/
 
 
     public void StartLevel()

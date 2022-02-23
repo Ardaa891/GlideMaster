@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -45,6 +47,9 @@ public class PlayerController : MonoBehaviour
     public Animator uiAnim;
     Sequence seq;
     public GameObject levelFailedMenu;
+    public TextMeshPro scoreText, adjectiveText;
+    public int score;
+    public int enemyScore;
 
     
 
@@ -64,6 +69,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         seq = DOTween.Sequence();
+        scoreText.text = score.ToString();
+        
         if (LevelController.Current.gameActive)
         {
             float newX = 0;
@@ -72,6 +79,32 @@ public class PlayerController : MonoBehaviour
 
             Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 20 * Time.deltaTime);
             transform.position = newPos;
+
+            if (score >= 4)
+            {
+                adjectiveText.text = "Intermediate";
+                Wing.SetActive(false);
+                backpack.SetActive(false);
+                diamondWing.SetActive(true);
+                diamondEffect.SetActive(true);
+            }
+            if (score >= 15)
+            {
+                adjectiveText.text = "Advanced";
+                diamondWing.SetActive(false);
+                goldenWing.SetActive(true);
+                goldenEffect.SetActive(true);
+            }
+            if (score < 15 && score > 4)
+            {
+                goldenWing.SetActive(false);
+                diamondWing.SetActive(true);
+            }
+            if (score < 4)
+            {
+                adjectiveText.text = "Noob";
+            }
+
 
             if (LevelController.Current.gameActive && isFinished)
             {
@@ -177,7 +210,7 @@ public class PlayerController : MonoBehaviour
 
         if (firstCol)
         {
-            if(LevelController.Current.score <= 0)
+            if(score <= 0)
             {
                 fail = true;
                 seq.Append(transform.DOMoveY(-100, 5f));
@@ -194,7 +227,19 @@ public class PlayerController : MonoBehaviour
 
             
         }
+
         
+
+
+        if (fail)
+        {
+            CameraController.Current.target = null;
+        }
+        else
+        {
+            return;
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -245,7 +290,8 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
            transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f,RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
-            LevelController.Current.ChangeScore(2);
+            //LevelController.Current.ChangeScore(2);
+            ChangeScore(2);
             Destroy(other.gameObject);
             
         }
@@ -268,7 +314,8 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(turnOffGravity());
             rb.drag = 1f;
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
-            LevelController.Current.ChangeScore(-2);
+            //LevelController.Current.ChangeScore(-2);
+            ChangeScore(-2);
             Destroy(other.gameObject);
         }
 
@@ -283,7 +330,7 @@ public class PlayerController : MonoBehaviour
         {
             float enemyScore = other.GetComponent<Enemy>()._score;
 
-            if(LevelController.Current.score < enemyScore)
+            if(score < enemyScore)
             {
                 fail = true;
                 seq.Append(transform.DOMoveY(-100, 5f));
@@ -297,10 +344,10 @@ public class PlayerController : MonoBehaviour
 
 
             }
-            else if (LevelController.Current.score > enemyScore)
+            else if (score > enemyScore)
             {
-                LevelController.Current.FightScore(10);
-
+                //LevelController.Current.FightScore(10);
+                FightScore(10);
                 anim.SetTrigger("Kick");
             }
        
@@ -310,7 +357,7 @@ public class PlayerController : MonoBehaviour
         {
             float enemyScore = other.GetComponent<Enemy>()._score;
 
-            if (LevelController.Current.score < enemyScore)
+            if (score < enemyScore)
             {
                 LevelController.Current.gameActive = false;
                 panel.SetActive(true);
@@ -321,7 +368,7 @@ public class PlayerController : MonoBehaviour
                 Enemy.Current.Still();
 
             }
-            else if (LevelController.Current.score > enemyScore)
+            else if (score > enemyScore)
             {
                 
 
@@ -336,7 +383,7 @@ public class PlayerController : MonoBehaviour
             finishEnemy.SetActive(true);
         }
 
-        if (firstCol && other.CompareTag("down") && LevelController.Current.score <= 0)
+        if (firstCol && other.CompareTag("down") && score <= 0)
         {
             fail = true;
             seq.Append(transform.DOMoveY(-100, 5f));
@@ -424,6 +471,35 @@ public class PlayerController : MonoBehaviour
     void Rot1()
     {
         transform.DOLocalRotate(new Vector3(0, 0, 0), 0.2f, RotateMode.Fast).SetEase(Ease.Linear);
+    }
+
+    public void ChangeScore(int increment)
+    {
+
+
+        score += increment;
+
+        sizeAnim.SetTrigger("size");
+
+
+    }
+
+    public void FightScore(int increment)
+    {
+        if (score > enemyScore)
+        {
+            score += increment;
+            Current.sizeAnim.SetTrigger("size");
+        }
+        else if (score < enemyScore)
+        {
+            score--;
+            sizeAnim.SetTrigger("size");
+        }
+
+
+
+
     }
 
 

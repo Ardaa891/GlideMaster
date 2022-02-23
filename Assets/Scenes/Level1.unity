@@ -51526,6 +51526,7 @@ MonoBehaviour:
   xSpeed: 50
   limitX: 50
   isFinished: 0
+  fail: 0
   firstCol: 0
   anim: {fileID: 1143463186}
   Wing: {fileID: 559940356}
@@ -51548,6 +51549,10 @@ MonoBehaviour:
   backpack: {fileID: 1656799049}
   uiAnim: {fileID: 30069101}
   levelFailedMenu: {fileID: 2025782704}
+  scoreText: {fileID: 1877425664}
+  adjectiveText: {fileID: 1197901572}
+  score: 0
+  enemyScore: 0
 --- !u!54 &1482551085
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -55914,6 +55919,7 @@ MonoBehaviour:
   xSpeed: 50
   limitX: 50
   isFinished: 0
+  fail: 0
   firstCol: 0
   anim: {fileID: 1126355933}
   Wing: {fileID: 204755409}
@@ -55936,6 +55942,10 @@ MonoBehaviour:
   backpack: {fileID: 32859758}
   uiAnim: {fileID: 1905883342}
   levelFailedMenu: {fileID: 2025782704}
+  scoreText: {fileID: 733475442}
+  adjectiveText: {fileID: 886921058}
+  score: 0
+  enemyScore: 0
 --- !u!1001 &1639069375
 PrefabInstance:
   m_ObjectHideFlags: 0
