@@ -45,8 +45,11 @@ public class PlayerController : MonoBehaviour
     public Animator uiAnim;
     Sequence seq;
     public GameObject levelFailedMenu;
-    
-    
+
+    private void Awake()
+    {
+        anim = remy.GetComponent<Animator>();
+    }
 
     void Start()
     {
@@ -78,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
                 _currentSpeed = 35;
                 uiAnim.SetBool("descale", true);
-                float desiredYPos = (finishEnemy.transform.position.y + 5);
+                float desiredYPos = (finishEnemy.transform.position.y + 2);
                 float desiredXPos = (finishEnemy.transform.position.x);
 
                 transform.DOMoveY(desiredYPos, 7f);
@@ -334,7 +337,7 @@ public class PlayerController : MonoBehaviour
             finishEnemy.SetActive(true);
         }
 
-        if (firstCol && other.CompareTag("down"))
+        if (firstCol && other.CompareTag("down") && LevelController.Current.score <= 0)
         {
             seq.Append(transform.DOMoveY(-100, 5f));
             seq.Join(transform.DOLocalRotate(new Vector3(0, 0, 3600), 5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental));

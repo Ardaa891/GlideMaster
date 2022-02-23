@@ -48,6 +48,57 @@ public class LevelController : MonoBehaviour
         }
     }
 
+    public void NextLevel()
+    {
+        StartCoroutine(LevelUp());
+    }
+
+    public IEnumerator LevelUp()
+    {
+       
+
+
+        //Debug.Log((levels.IndexOf(CurrentLevel)+1).ToString() +"  " +levels.Count.ToString());
+
+
+        if ((levels.IndexOf(CurrentLevel) + 1) == levels.Count)
+        {
+            
+
+            //FindObjectOfType<SkillManager>().SetFinishSkillPanel();
+
+            PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
+            yield return new WaitForSeconds(.5f);
+
+            yield return new WaitForSeconds(1.5f);
+            //  GameHandler.Instance.Appear_TransitionPanel();
+            
+
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+
+        }
+
+
+        else
+        {
+            CurrentLevel = levels[(PlayerPrefs.GetInt("level") + 1) % levels.Count];
+            yield return new WaitForSeconds(1f);
+
+            
+            levels[(PlayerPrefs.GetInt("level")) % levels.Count].SetActive(false);
+
+
+            PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
+            yield return new WaitForSeconds(1f);
+            levels[PlayerPrefs.GetInt("level") % levels.Count].SetActive(true);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        }
+
+
+    }
+
     public void ChangeScore(int increment)
     {
         
@@ -80,8 +131,8 @@ public class LevelController : MonoBehaviour
     public void Update()
     {
         scoreText.text = score.ToString();
-        
-        
+
+ 
         
 
         if(score >= 4)
