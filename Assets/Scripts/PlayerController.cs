@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public float xSpeed;
     public float limitX;
     public bool isFinished = false;
-    public bool gameActive = false;
+    public bool fail = false;
     public bool firstCol = false;
     
     
@@ -46,10 +46,7 @@ public class PlayerController : MonoBehaviour
     Sequence seq;
     public GameObject levelFailedMenu;
 
-    private void Awake()
-    {
-        anim = remy.GetComponent<Animator>();
-    }
+    
 
     void Start()
     {
@@ -67,7 +64,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         seq = DOTween.Sequence();
-        if (gameActive)
+        if (LevelController.Current.gameActive)
         {
             float newX = 0;
             float touchXDelta = 0;
@@ -76,7 +73,7 @@ public class PlayerController : MonoBehaviour
             Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 20 * Time.deltaTime);
             transform.position = newPos;
 
-            if (gameActive && isFinished)
+            if (LevelController.Current.gameActive && isFinished)
             {
 
                 _currentSpeed = 35;
@@ -182,10 +179,11 @@ public class PlayerController : MonoBehaviour
         {
             if(LevelController.Current.score <= 0)
             {
+                fail = true;
                 seq.Append(transform.DOMoveY(-100, 5f));
                 seq.Join(transform.DOLocalRotate(new Vector3(0, 0, 3600), 5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental));
                 StartCoroutine(Die());
-                CameraController.Current.target = null;
+               // CameraController.Current.target = null;
                 uiAnim.SetBool("descale", true);
                 levelFailedMenu.SetActive(true);
             }
@@ -287,10 +285,11 @@ public class PlayerController : MonoBehaviour
 
             if(LevelController.Current.score < enemyScore)
             {
+                fail = true;
                 seq.Append(transform.DOMoveY(-100, 5f));
                 seq.Join(transform.DOLocalRotate(new Vector3(0, 0, 3600), 5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental)) ;
                 StartCoroutine(Die());
-                CameraController.Current.target = null;
+               // CameraController.Current.target = null;
                 uiAnim.SetBool("descale", true);
                 //gameActive = false;
                 levelFailedMenu.SetActive(true);
@@ -313,7 +312,7 @@ public class PlayerController : MonoBehaviour
 
             if (LevelController.Current.score < enemyScore)
             {
-                gameActive = false;
+                LevelController.Current.gameActive = false;
                 panel.SetActive(true);
                 finishStar.SetActive(true);
                 anim.SetBool("Idle", true);
@@ -332,17 +331,18 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("Endlevel"))
         {
-            gameActive = false;
+            LevelController.Current.gameActive = false;
             panel.SetActive(true);
             finishEnemy.SetActive(true);
         }
 
         if (firstCol && other.CompareTag("down") && LevelController.Current.score <= 0)
         {
+            fail = true;
             seq.Append(transform.DOMoveY(-100, 5f));
             seq.Join(transform.DOLocalRotate(new Vector3(0, 0, 3600), 5f, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental));
             StartCoroutine(Die());
-            CameraController.Current.target = null;
+            //CameraController.Current.target = null;
             uiAnim.SetBool("descale", true);
             //gameActive = false;
             levelFailedMenu.SetActive(true);
@@ -386,12 +386,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public void StartLevel()
-    {
-        gameActive = true;
-        anim.SetBool("Run", true);
-        playButton.SetActive(false);
-    }
+   
 
     
 

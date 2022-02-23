@@ -21,6 +21,15 @@ public class CameraController : MonoBehaviour
 
         transform.position = smoothedPosition;
         //transform.LookAt(target);
+
+        if (PlayerController.Current.fail)
+        {
+            target = null;
+        }
+        else
+        {
+            return;
+        }
     }
 
    

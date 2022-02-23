@@ -11,7 +11,7 @@ public class LevelController : MonoBehaviour
     public List<GameObject> levels = new List<GameObject>();
     public GameObject gameOverMenu, finishGameMenu;
     public TextMeshPro scoreText, enemyScoreText,  adjectiveText;
-
+    public bool gameActive = false;
     public int score;
     
     public int enemyScore;
@@ -160,10 +160,26 @@ public class LevelController : MonoBehaviour
             adjectiveText.text = "Noob";
         }
 
-        
-        
+
+        if (PlayerController.Current.fail)
+        {
+            CameraController.Current.target = null;
+        }
+        else
+        {
+            return;
+        }
      
         
+    }
+
+
+    public void StartLevel()
+    {
+        gameActive = true;
+        PlayerController.Current.anim.SetBool("Run", true);
+        PlayerController.Current.anim.SetBool("Idle", false);
+        PlayerController.Current.playButton.SetActive(false);
     }
 
 
