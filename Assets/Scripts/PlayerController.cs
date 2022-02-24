@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
             Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z + 20 * Time.deltaTime);
             transform.position = newPos;
 
-            if (score >= 4)
+            if (score >= 15)
             {
                 adjectiveText.text = "Intermediate";
                 Wing.SetActive(false);
@@ -88,19 +88,19 @@ public class PlayerController : MonoBehaviour
                 diamondWing.SetActive(true);
                 diamondEffect.SetActive(true);
             }
-            if (score >= 15)
+            if (score >= 30)
             {
                 adjectiveText.text = "Advanced";
                 diamondWing.SetActive(false);
                 goldenWing.SetActive(true);
                 goldenEffect.SetActive(true);
             }
-            if (score < 15 && score > 4)
+            if (score < 30 && score > 15)
             {
                 goldenWing.SetActive(false);
                 diamondWing.SetActive(true);
             }
-            if (score < 4)
+            if (score < 15)
             {
                 adjectiveText.text = "Noob";
             }
@@ -109,12 +109,12 @@ public class PlayerController : MonoBehaviour
             if (LevelController.Current.gameActive && isFinished)
             {
 
-                _currentSpeed = 35;
+                _currentSpeed = 45;
                 uiAnim.SetBool("descale", true);
                 float desiredYPos = (finishEnemy.transform.position.y + 2);
                 float desiredXPos = (finishEnemy.transform.position.x);
 
-                transform.DOMoveY(desiredYPos, 7f);
+                transform.DOMoveY(desiredYPos, 5f);
                 transform.DOMoveX(desiredXPos, 1f);
 
                 
@@ -316,6 +316,28 @@ public class PlayerController : MonoBehaviour
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             //LevelController.Current.ChangeScore(-2);
             ChangeScore(-2);
+            Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("web"))
+        {
+            float worldYpos = (World.transform.position.y);
+            float finishYpos = (Finish.transform.position.y);
+            float colYpos = (Collectables.transform.position.y);
+            float charYpos = (gameObject.transform.position.y);
+
+            transform.DOMoveY(charYpos - 5, 0.5f).SetEase(Ease.Linear);
+            Collectables.transform.DOMoveY(colYpos - 4.5f, 0.5f).SetEase(Ease.Linear);
+            Finish.transform.DOMoveY(finishYpos + 1, 0.5f).SetEase(Ease.Linear);
+
+            World.transform.DOMoveY(worldYpos + 7, 0.5f).SetEase(Ease.OutCirc);
+            //rb.AddForce(0, -thrust, 0, ForceMode.Impulse);
+            rb.useGravity = false;
+            StartCoroutine(turnOffGravity());
+            rb.drag = 1f;
+            transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+            //LevelController.Current.ChangeScore(-2);
+            ChangeScore(-5);
             Destroy(other.gameObject);
         }
 

@@ -47,10 +47,44 @@ public class LevelController : MonoBehaviour
 
     public void NextLevel()
     {
-        StartCoroutine(LevelUp());
+        //StartCoroutine(LevelUp());
+        if ((levels.IndexOf(CurrentLevel) + 1) == levels.Count)
+        {
+
+
+
+
+            PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
+            
+
+            
+            //  GameHandler.Instance.Appear_TransitionPanel();
+
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+
+        }
+
+
+        else
+        {
+            CurrentLevel = levels[(PlayerPrefs.GetInt("level") + 1) % levels.Count];
+            
+
+
+            levels[(PlayerPrefs.GetInt("level")) % levels.Count].SetActive(false);
+
+
+            PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
+            
+            levels[PlayerPrefs.GetInt("level") % levels.Count].SetActive(true);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        }
     }
 
-    public IEnumerator LevelUp()
+    /*public IEnumerator LevelUp()
     {
        
 
@@ -65,9 +99,9 @@ public class LevelController : MonoBehaviour
            
 
             PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.01f);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.01f);
             //  GameHandler.Instance.Appear_TransitionPanel();
             
 
@@ -80,21 +114,21 @@ public class LevelController : MonoBehaviour
         else
         {
             CurrentLevel = levels[(PlayerPrefs.GetInt("level") + 1) % levels.Count];
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.01f);
 
             
             levels[(PlayerPrefs.GetInt("level")) % levels.Count].SetActive(false);
 
 
             PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.01f);
             levels[PlayerPrefs.GetInt("level") % levels.Count].SetActive(true);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         }
 
 
-    }
+    }*/
 
     /*public void ChangeScore(int increment)
     {
