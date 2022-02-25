@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
     public Animator uiAnim;
     Sequence seq;
     public GameObject levelFailedMenu;
+    public GameObject levelUpPopup;
+    public GameObject levelDownPopup, spiderWebPopup, beatPopup;
+    public ParticleSystem levelUpEffect;
     public TextMeshPro scoreText, adjectiveText;
     public int score;
     public int enemyScore;
@@ -293,6 +296,10 @@ public class PlayerController : MonoBehaviour
             //LevelController.Current.ChangeScore(2);
             ChangeScore(2);
             Destroy(other.gameObject);
+
+            levelUpPopup.transform.DOScale(1.75f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo); 
+            levelUpEffect.Play();
+            
             
         }
 
@@ -316,6 +323,7 @@ public class PlayerController : MonoBehaviour
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             //LevelController.Current.ChangeScore(-2);
             ChangeScore(-2);
+            levelDownPopup.transform.DOScale(1.75f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
             Destroy(other.gameObject);
         }
 
@@ -338,6 +346,7 @@ public class PlayerController : MonoBehaviour
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             //LevelController.Current.ChangeScore(-2);
             ChangeScore(-5);
+            spiderWebPopup.transform.DOScale(1.75f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
             Destroy(other.gameObject);
         }
 
@@ -371,6 +380,8 @@ public class PlayerController : MonoBehaviour
                 //LevelController.Current.FightScore(10);
                 FightScore(10);
                 anim.SetTrigger("Kick");
+                beatPopup.transform.DOScale(2f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+               
             }
        
         }
@@ -524,7 +535,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
+   
 
+    
 
 
 
