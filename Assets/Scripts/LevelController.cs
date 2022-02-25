@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using ElephantSDK;
 
 public class LevelController : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class LevelController : MonoBehaviour
     public GameObject gameOverMenu, finishGameMenu;
     public TextMeshPro  enemyScoreText;
     public bool gameActive = false;
+    public bool levelEnd = false;
+    protected bool apkStart = true;
+    protected bool apkFail = true;
+    protected bool apkSuccess = true;
    
 
     [Space]
@@ -207,10 +212,38 @@ public class LevelController : MonoBehaviour
 
     public void StartLevel()
     {
+        APKGameStart();
         gameActive = true;
         PlayerController.Current.anim.SetBool("Run", true);
         PlayerController.Current.anim.SetBool("Idle", false);
         PlayerController.Current.playButton.SetActive(false);
+    }
+
+    public void APKGameStart()
+    {
+        if (apkStart)
+        {
+            Elephant.LevelStarted(PlayerPrefs.GetInt("level") + 1);
+            apkStart = false;
+        }
+    }
+
+   public void APKGameSuccess()
+    {
+        if (apkSuccess)
+        {
+            Elephant.LevelCompleted(PlayerPrefs.GetInt("level") + 1);
+            apkSuccess = false;
+        }
+    }
+
+   public void APKGameFail()
+    {
+        if (apkFail)
+        {
+            Elephant.LevelFailed(PlayerPrefs.GetInt("level") + 1);
+            apkFail = false;
+        }
     }
 
 

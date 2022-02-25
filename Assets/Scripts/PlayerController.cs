@@ -223,6 +223,7 @@ public class PlayerController : MonoBehaviour
                // CameraController.Current.target = null;
                 uiAnim.SetBool("descale", true);
                 levelFailedMenu.SetActive(true);
+                LevelController.Current.APKGameFail();
             }
             else
             {
@@ -380,6 +381,7 @@ public class PlayerController : MonoBehaviour
                 uiAnim.SetBool("descale", true);
                 //gameActive = false;
                 levelFailedMenu.SetActive(true);
+                LevelController.Current.APKGameFail();
 
 
 
@@ -403,6 +405,7 @@ public class PlayerController : MonoBehaviour
 
             if (score < enemyScore)
             {
+                LevelController.Current.APKGameSuccess();
                 LevelController.Current.gameActive = false;
                 panel.SetActive(true);
                 finishStar.SetActive(true);
@@ -425,6 +428,7 @@ public class PlayerController : MonoBehaviour
             LevelController.Current.gameActive = false;
             panel.SetActive(true);
             finishEnemy.SetActive(true);
+            LevelController.Current.APKGameSuccess();
         }
 
         if (firstCol && other.CompareTag("down") && score <= 0)
