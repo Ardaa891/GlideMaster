@@ -11215,7 +11215,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 09587bb6a05da2345a3e1539d29557ee, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 09587bb6a05da2345a3e1539d29557ee, type: 3}
       propertyPath: m_LocalScale.x
@@ -21063,7 +21063,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 27ef5f3df1012e84c81c0f1eafd5a159, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ef5f3df1012e84c81c0f1eafd5a159, type: 3}
       propertyPath: m_LocalScale.x
@@ -62499,7 +62499,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 09587bb6a05da2345a3e1539d29557ee, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 09587bb6a05da2345a3e1539d29557ee, type: 3}
       propertyPath: m_LocalScale.x
@@ -71750,27 +71750,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1143463187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143463185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 002595e91f609a246845cbf8a32fd288, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  styledBanner: 0
-  messageNoRenderer: 1
-  messageMultiMaterials: 0
-  messageNoMaterial: 0
-  messageTransparencySupport: 1
-  categoryMaterial: 0
-  customFogMaterial: {fileID: 0}
-  messageInvalidFogMaterial: 0
-  styledSpace0: 0
 --- !u!1001 &1144673941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72070,7 +72049,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 09587bb6a05da2345a3e1539d29557ee, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 09587bb6a05da2345a3e1539d29557ee, type: 3}
       propertyPath: m_LocalScale.x
@@ -78703,7 +78682,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 2c65a77189dffb34b81dbf4cc3f26556, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2c65a77189dffb34b81dbf4cc3f26556, type: 3}
       propertyPath: m_LocalScale.x
@@ -116244,7 +116223,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: fb7e4e0a737d57e4db1ad6cd8ac00774, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fb7e4e0a737d57e4db1ad6cd8ac00774, type: 3}
       propertyPath: m_LocalScale.x
@@ -118101,7 +118080,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f8ab4a25eb7a9ce448d5b8800a741457, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f8ab4a25eb7a9ce448d5b8800a741457, type: 3}
       propertyPath: m_LocalScale.x
@@ -122162,7 +122141,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 6f22ddbc0dbe7614e98b2a7acb90567f, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f22ddbc0dbe7614e98b2a7acb90567f, type: 3}
       propertyPath: m_LocalScale.x

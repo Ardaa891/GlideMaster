@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 86
+  controlID: 62
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 39
+  controlID: 20
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 38
+  controlID: 140
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -974,9 +974,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 54a90200
-      m_LastClickedID: 174420
-      m_ExpandedIDs: 3662fcffbc62fcffb8b4fcff9e520200109f0200b89f0200
+      m_SelectedIDs: 50740000
+      m_LastClickedID: 29776
+      m_ExpandedIDs: 3efbffff9e670000346b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1041,22 +1041,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/NiceVibrations/Common
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/NiceVibrations/Common
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\User\Documents\GitHub\GlideMaster
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 2944}
-    m_SelectedIDs: 586c0200
-    m_LastClickedID: 158808
-    m_ExpandedIDs: 00000000366a0200386a02003a6a02003c6a02003e6a0200406a0200426a0200446a0200466a0200486a02004a6a02004c6a02004e6a0200506a0200526a0200546a0200566a0200586a02005a6a02005c6a02005e6a0200606a0200626a0200646a0200666a0200686a02006a6a02006c6a02006e6a0200706a0200726a0200746a0200566c02005e6d0200
+    scrollPos: {x: 0, y: 2916}
+    m_SelectedIDs: 16cc0000
+    m_LastClickedID: 52246
+    m_ExpandedIDs: 0000000096870000988700009a8700009c8700009e870000a0870000a2870000a4870000a6870000a8870000aa870000ac870000ae870000b0870000b2870000b4870000b6870000b8870000ba870000bc870000be870000c0870000c2870000c4870000c6870000c8870000ca870000cc870000ce870000d0870000d2870000d4870000b6890000f68a0000eccd0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1084,7 +1084,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000366a0200386a02003a6a02003c6a02003e6a0200406a0200426a0200446a0200466a0200486a02004a6a02004c6a02004e6a0200506a0200526a0200546a0200566a0200586a02005a6a02005c6a02005e6a0200606a0200626a0200646a0200666a0200686a02006a6a02006c6a02006e6a0200706a0200726a0200746a0200
+    m_ExpandedIDs: 0000000096870000988700009a8700009c8700009e870000a0870000a2870000a4870000a6870000a8870000aa870000ac870000ae870000b0870000b2870000b4870000b6870000b8870000ba870000bc870000be870000c0870000c2870000c4870000c6870000c8870000ca870000cc870000ce870000d0870000d2870000d4870000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 529800000000000080171100988f0000bef3120012321600449100006ace0100c26d0000d06d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
