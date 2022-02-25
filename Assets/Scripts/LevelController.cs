@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using ElephantSDK;
+//using ElephantSDK;
 
 public class LevelController : MonoBehaviour
 {
@@ -223,7 +223,7 @@ public class LevelController : MonoBehaviour
     {
         if (apkStart)
         {
-            Elephant.LevelStarted(PlayerPrefs.GetInt("level") + 1);
+            //Elephant.LevelStarted(PlayerPrefs.GetInt("level") + 1);
             apkStart = false;
         }
     }
@@ -232,7 +232,7 @@ public class LevelController : MonoBehaviour
     {
         if (apkSuccess)
         {
-            Elephant.LevelCompleted(PlayerPrefs.GetInt("level") + 1);
+           // Elephant.LevelCompleted(PlayerPrefs.GetInt("level") + 1);
             apkSuccess = false;
         }
     }
@@ -241,7 +241,7 @@ public class LevelController : MonoBehaviour
     {
         if (apkFail)
         {
-            Elephant.LevelFailed(PlayerPrefs.GetInt("level") + 1);
+           // Elephant.LevelFailed(PlayerPrefs.GetInt("level") + 1);
             apkFail = false;
         }
     }
