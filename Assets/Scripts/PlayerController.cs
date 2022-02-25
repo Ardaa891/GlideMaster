@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Current;
@@ -297,8 +298,10 @@ public class PlayerController : MonoBehaviour
             ChangeScore(2);
             Destroy(other.gameObject);
 
-            levelUpPopup.transform.DOScale(1.75f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo); 
+            levelUpPopup.transform.DOScale(0.85f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo); 
             levelUpEffect.Play();
+
+            
             
             
         }
@@ -323,7 +326,7 @@ public class PlayerController : MonoBehaviour
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             //LevelController.Current.ChangeScore(-2);
             ChangeScore(-2);
-            levelDownPopup.transform.DOScale(1.75f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+            levelDownPopup.transform.DOScale(0.85f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
             Destroy(other.gameObject);
         }
 
@@ -346,7 +349,7 @@ public class PlayerController : MonoBehaviour
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             //LevelController.Current.ChangeScore(-2);
             ChangeScore(-5);
-            spiderWebPopup.transform.DOScale(1.75f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+            spiderWebPopup.transform.DOScale(0.85f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
             Destroy(other.gameObject);
         }
 
@@ -380,7 +383,7 @@ public class PlayerController : MonoBehaviour
                 //LevelController.Current.FightScore(10);
                 FightScore(10);
                 anim.SetTrigger("Kick");
-                beatPopup.transform.DOScale(2f, 0.3f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+                beatPopup.transform.DOScale(1f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
                
             }
        
