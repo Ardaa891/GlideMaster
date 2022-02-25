@@ -297,8 +297,9 @@ public class PlayerController : MonoBehaviour
             //LevelController.Current.ChangeScore(2);
             ChangeScore(2);
             Destroy(other.gameObject);
-
-            levelUpPopup.transform.DOScale(0.85f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo); 
+            levelUpPopup.SetActive(true);
+            levelUpPopup.transform.DOScale(0.85f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+            StartCoroutine(KillPopup());
             levelUpEffect.Play();
 
             
@@ -326,7 +327,10 @@ public class PlayerController : MonoBehaviour
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             //LevelController.Current.ChangeScore(-2);
             ChangeScore(-2);
+            levelDownPopup.SetActive(true);
+
             levelDownPopup.transform.DOScale(0.85f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+            StartCoroutine(KillDownPopup());
             Destroy(other.gameObject);
         }
 
@@ -349,7 +353,9 @@ public class PlayerController : MonoBehaviour
             transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
             //LevelController.Current.ChangeScore(-2);
             ChangeScore(-5);
+            spiderWebPopup.SetActive(true);
             spiderWebPopup.transform.DOScale(0.85f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+            StartCoroutine(KillWebPopup());
             Destroy(other.gameObject);
         }
 
@@ -383,7 +389,9 @@ public class PlayerController : MonoBehaviour
                 //LevelController.Current.FightScore(10);
                 FightScore(10);
                 anim.SetTrigger("Kick");
+                beatPopup.SetActive(true);
                 beatPopup.transform.DOScale(1f, 0.28f).SetEase(Ease.OutFlash).SetLoops(2, LoopType.Yoyo);
+                StartCoroutine(KillBeatPopup());
                
             }
        
@@ -538,9 +546,31 @@ public class PlayerController : MonoBehaviour
 
     }
 
-   
+   IEnumerator KillPopup()
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
 
-    
+        levelUpPopup.SetActive(false);
+    }
+
+    IEnumerator KillDownPopup()
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
+        levelDownPopup.SetActive(false);
+    }
+
+    IEnumerator KillWebPopup()
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
+        spiderWebPopup.SetActive(false);
+    }
+
+    IEnumerator KillBeatPopup()
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
+        beatPopup.SetActive(false);
+    }
+
 
 
 
