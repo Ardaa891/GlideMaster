@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
-
+using MoreMountains.NiceVibrations;
 
 public class PlayerController : MonoBehaviour
 {
@@ -279,6 +279,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("up"))
         {
+            MMVibrationManager.Haptic(HapticTypes.MediumImpact);
             firstCol = true;
             float worldYpos = (World.transform.position.y);
             float colYpos = (Collectables.transform.position.y);
@@ -310,6 +311,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("down"))
         {
+            MMVibrationManager.Haptic(HapticTypes.Failure);
             firstCol = true;
             float worldYpos = (World.transform.position.y);
             float finishYpos = (Finish.transform.position.y);
@@ -337,6 +339,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("web"))
         {
+            MMVibrationManager.Haptic(HapticTypes.Failure);
             float worldYpos = (World.transform.position.y);
             float finishYpos = (Finish.transform.position.y);
             float colYpos = (Collectables.transform.position.y);
@@ -370,7 +373,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             float enemyScore = other.GetComponent<Enemy>()._score;
-
+            MMVibrationManager.Haptic(HapticTypes.MediumImpact);
             if(score < enemyScore)
             {
                 fail = true;
@@ -402,7 +405,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("FinishEnemy"))
         {
             float enemyScore = other.GetComponent<Enemy>()._score;
-
+            MMVibrationManager.Haptic(HapticTypes.LightImpact);
             if (score < enemyScore)
             {
                 LevelController.Current.APKGameSuccess();
