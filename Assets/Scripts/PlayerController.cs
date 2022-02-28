@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
             if (score < 15)
             {
                 adjectiveText.text = "Noob";
+                diamondWing.SetActive(false);
+                Wing.SetActive(true);
             }
 
 
